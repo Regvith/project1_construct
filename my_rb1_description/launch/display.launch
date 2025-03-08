@@ -1,0 +1,14 @@
+<launch>
+
+    <param name="robot_description" command="$(find xacro)/xacro $(find my_rb1_description)/urdf/my_rb1_robot.xacro" />
+     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+        <param name="use_sim_time" value="true"/>
+    </node>
+
+    <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" output="screen">
+    </node>
+
+    <node name="rviz" pkg="rviz" type="rviz"  required="true" args ="-d /home/user/catkin_ws/src/my_rb1_robot/my_rb1_description/rviz/check.rviz"/>
+  
+
+</launch>
