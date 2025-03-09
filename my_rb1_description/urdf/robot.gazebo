@@ -4,5 +4,115 @@
     <gazebo reference="base_link">
       <material>Gazebo/Black</material>
     </gazebo>
+    <gazebo reference="base_left_wheel_link">
+      <material>Gazebo/Red</material>
+      <mu1>1</mu1>
+      <mu2>1</mu2>
+    </gazebo>
+    <gazebo reference="base_right_wheel_link">
+      <material>Gazebo/Red</material>
+      <mu1>1</mu1>
+      <mu2>1</mu2>
+    </gazebo>
+    <gazebo reference="link_laser_scan">
+    <material>Gazebo/Blue</material>
+    </gazebo>
 
+    <gazebo reference="caster_front_wheel_link">
+      <material>Gazebo/DarkGrey</material>
+      <mu1>0</mu1>
+      <mu2>0</mu2>
+    </gazebo>
+
+    <gazebo reference="caster_rear_wheel_link">
+      <material>Gazebo/DarkGrey</material>
+      <mu1>0</mu1>
+      <mu2>0</mu2>
+    </gazebo>
+    <!-- Laser -->
+    <gazebo reference="link_laser_scan">
+        <sensor type="ray" name="head_hokuyo_sensor">
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>true</visualize>
+            <update_rate>20</update_rate>
+            <ray>
+                <scan>
+                    <horizontal>
+                        <samples>720</samples>
+                        <resolution>1</resolution>
+                        <min_angle>-1.570796</min_angle>
+                        <max_angle>1.570796</max_angle>
+                    </horizontal>
+                </scan>
+                <range>
+                    <min>0.20</min>
+                    <max>10.0</max>
+                    <resolution>0.01</resolution>
+                </range>
+                <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.01</stddev>
+                </noise>
+            </ray>
+            <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
+                <topicName>/scan</topicName>
+                <frameName>sensor_laser</frameName>
+            </plugin>
+        </sensor>
+    </gazebo>
+  <gazebo>
+<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+
+    <!-- Plugin update rate in Hz -->
+    <updateRate>50</updateRate>
+
+    <!-- Name of left joint, taken from Xacro -->
+    <leftJoint>base_left_wheel_joint</leftJoint>
+
+    <!-- Name of right joint, taken from Xacro -->
+    <rightJoint>base_right_wheel_joint</rightJoint>
+
+    <!-- The distance from the center of one wheel to the other -->
+    <wheelSeparation>0.6</wheelSeparation>  <!-- Adjusted based on left and right wheel joints -->
+
+    <!-- Diameter of the wheels -->
+    <wheelDiameter>0.05</wheelDiameter>  <!-- Taken from Xacro: wheel_radius * 2 -->
+
+    <!-- Wheel acceleration in rad/s^2 -->
+    <wheelAcceleration>1.0</wheelAcceleration>
+
+    <!-- Maximum torque which the wheels can produce, in Nm -->
+    <wheelTorque>10</wheelTorque>  <!-- Reduced from 20 for stability -->
+
+    <!-- Topic to receive geometry_msgs/Twist commands -->
+    <commandTopic>/cmd_vel</commandTopic>
+
+    <!-- Topic to publish nav_msgs/Odometry messages -->
+    <odometryTopic>/odom</odometryTopic>
+
+    <!-- Odometry frame -->
+    <odometryFrame>odom</odometryFrame>
+
+    <!-- Robot base frame, taken from Xacro -->
+    <robotBaseFrame>base_link</robotBaseFrame>
+
+    <!-- Odometry source: 0 for ENCODER, 1 for WORLD -->
+    <odometrySource>0</odometrySource>  <!-- Set to ENCODER for real robot behavior -->
+
+    <!-- Set to true to publish wheel TF -->
+    <publishWheelTF>true</publishWheelTF>
+
+    <!-- Set to true to publish odometry TF -->
+    <publishOdom>true</publishOdom>
+
+    <!-- Publish Joint States for the wheels -->
+    <publishWheelJointState>true</publishWheelJointState>
+
+    <!-- Swap left and right wheels if necessary -->
+    <legacyMode>false</legacyMode>
+
+</plugin>
+
+</gazebo>
 </robot>
