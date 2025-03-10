@@ -74,10 +74,10 @@
     <rightJoint>base_right_wheel_joint</rightJoint>
 
     <!-- The distance from the center of one wheel to the other -->
-    <wheelSeparation>0.6</wheelSeparation>  <!-- Adjusted based on left and right wheel joints -->
+    <wheelSeparation>0.5</wheelSeparation>  <!-- Adjusted based on left and right wheel joints -->
 
     <!-- Diameter of the wheels -->
-    <wheelDiameter>0.05</wheelDiameter>  <!-- Taken from Xacro: wheel_radius * 2 -->
+    <wheelDiameter>0.025</wheelDiameter>  <!-- Taken from Xacro: wheel_radius * 2 -->
 
     <!-- Wheel acceleration in rad/s^2 -->
     <wheelAcceleration>1.0</wheelAcceleration>
@@ -95,7 +95,7 @@
     <odometryFrame>odom</odometryFrame>
 
     <!-- Robot base frame, taken from Xacro -->
-    <robotBaseFrame>base_link</robotBaseFrame>
+    <robotBaseFrame>base_footprint</robotBaseFrame>
 
     <!-- Odometry source: 0 for ENCODER, 1 for WORLD -->
     <odometrySource>0</odometrySource>  <!-- Set to ENCODER for real robot behavior -->

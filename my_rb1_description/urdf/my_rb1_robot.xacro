@@ -14,10 +14,10 @@
 <!--  Define Properties -->
 <xacro:property name="wheel_radius" value="0.025"/> <!-- 2.5 cm -->
 <xacro:property name="wheel_length" value="0.02"/> <!-- 2 cm -->
-<xacro:property name="wheel_mass" value="3"/> <!-- Mass of one wheel -->
+<xacro:property name="wheel_mass" value="4"/> <!-- Mass of one wheel -->
 <xacro:property name="caster_mass" value="1"/> <!-- Mass of one caster wheel -->
-<xacro:property name="base_mass" value="15"/> <!-- Mass of base -->
-<xacro:property name="lidar_mass" value="1.5"/> <!-- Mass of LIDAR -->
+<xacro:property name="base_mass" value="14"/> <!-- Mass of base -->
+<xacro:property name="lidar_mass" value="0.5"/> <!-- Mass of LIDAR -->
 
 <!--  Wheel Macro -->
 <xacro:macro name="wheel_link" params="prefix x y z r p yaw">
@@ -53,7 +53,7 @@
     <joint name="${prefix}_wheel_joint" type="continuous">
         <parent link="base_link"/>
         <child link="${prefix}_wheel_link"/>
-        <origin xyz="${x} ${y} ${z-0.25}" rpy="${r} ${p} ${yaw}"/>
+        <origin xyz="${x} ${y} ${z-0.125}" rpy="${r} ${p} ${yaw}"/>
         <axis xyz="0 0 1"/>  <!-- Ensure wheels rotate along the correct axis -->
     </joint>
 </xacro:macro>
@@ -65,7 +65,7 @@
 <joint name="base_foot_joint" type="fixed">
 <parent link ="base_footprint"/>
 <child link ="base_link"/>
-<origin xyz="0 0 0.25" rpy="0 0 0"/>
+<origin xyz="0 0 0.125" rpy="0 0 0"/>
 </joint>
 <!-- Base Link -->
 <link name="base_link">
@@ -78,13 +78,13 @@
     </inertial>
     <collision>
         <geometry>
-            <cylinder length="0.5" radius="0.3"/>
+            <cylinder length="0.3" radius="0.25"/>
         </geometry>
         <origin xyz="0 0 0" rpy="0 0 0"/>
     </collision>
     <visual>
         <geometry>
-            <cylinder length="0.5" radius="0.3"/>
+            <cylinder length="0.3" radius="0.25"/>
         </geometry>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <material name="blue"/>
@@ -96,8 +96,8 @@
 <xacro:wheel_link prefix="base_right" x="0" y="0" z="0" r="0" p="0" yaw="0"/>
 
 <!--  Wheel Joints -->
-<xacro:wheel_joint prefix="base_left" x="0" y="-0.3" z="0.02" r="1.57" p="0" yaw="0"/>
-<xacro:wheel_joint prefix="base_right" x="0" y="0.3" z="0.02" r="1.57" p="0" yaw="0"/>
+<xacro:wheel_joint prefix="base_left" x="0" y="-0.2" z="-0.015" r="-1.57" p="0" yaw="0"/>
+<xacro:wheel_joint prefix="base_right" x="0" y="0.2" z="-0.015" r="-1.57" p="0" yaw="0"/>
 
 
 
@@ -115,14 +115,14 @@
         <geometry>
             <sphere radius="0.025"/>
         </geometry>
-        <origin xyz="0 0 0.015" rpy="0 0 0"/>
+        <origin xyz="0 0 -0.125" rpy="0 0 0"/>
         <material name="grey"/>
     </visual>
     <collision>
         <geometry>
             <sphere radius="0.025"/>
         </geometry>
-        <origin xyz="0 0 0.015" rpy="0 0 0"/>
+        <origin xyz="0 0 -0.125" rpy="0 0 0"/>
     </collision>
 </link>
 
@@ -130,7 +130,7 @@
 <joint name="caster_front_joint" type="fixed">
     <parent link="base_link"/>
     <child link="caster_front_wheel_link"/>
-    <origin xyz="0.28 0 -0.25" rpy="0 0 0"/>
+    <origin xyz="0.1 0 -0.015" rpy="0 0 0"/>
 </joint>
 
 <!-- Rear Caster -->
@@ -146,14 +146,14 @@
         <geometry>
             <sphere radius="0.025"/>
         </geometry>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 -0.125" rpy="0 0 0"/>
         <material name="grey"/>
     </visual>
     <collision>
         <geometry>
             <sphere radius="0.025"/>
         </geometry>
-        <origin xyz="0 0 0.015" rpy="0 0 0"/>
+        <origin xyz="0 0 -0.125" rpy="0 0 0"/>
     </collision>
 </link>
 
@@ -161,7 +161,7 @@
 <joint name="caster_rear_joint" type="fixed">
     <parent link="base_link"/>
     <child link="caster_rear_wheel_link"/>
-    <origin xyz="-0.28 0 -0.25" rpy="0 0 0"/>
+    <origin xyz="-0.1 0 -0.015" rpy="0 0 0"/>
 </joint>
 
 <!--  LIDAR Sensor -->
@@ -192,7 +192,7 @@
 
 <!--  LIDAR Joint -->
 <joint name="joint_laser_scan_chassis" type="fixed">
-    <origin xyz="0.3 0 0.075" rpy="3.1457 0 0"/>
+    <origin xyz="0.25 0 0.075" rpy="3.1457 0 0"/>
     <child link="link_laser_scan"/>
     <parent link="base_link"/>
 </joint>
